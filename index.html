@@ -35,7 +35,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke
   <header style="background:var(--em)" class="text-white px-4 pt-3 pb-4 flex-none">
     <div class="flex items-center justify-between">
       <button onclick="bizSheet()" class="flex items-center gap-2 text-left" aria-label="Switch business">
-        <span id="ic-store"></span><span><span class="block text-xs opacity-80">Business</span><span id="bizName" class="block font-bold text-lg leading-tight"></span></span><span id="ic-chev"></span>
+        <span id="ic-store"></span><span><span class="block text-xs opacity-80">Business</span><span id="bizName" class="block font-bold text-lg leading-tight">Shaheen Mart</span></span><span id="ic-chev"></span>
       </button>
       <span class="flex items-center gap-3"><span class="text-sm opacity-90" id="todayLbl"></span><button onclick="setModal()" aria-label="Settings" class="text-xl">⚙</button></span>
     </div>
@@ -58,14 +58,13 @@ const firebaseConfig = {
   measurementId: "G-F3Y0LMCV99"
 };
 
-// Initialize Firebase
 if (typeof firebase !== 'undefined' && firebase.apps && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
 const $=s=>document.querySelector(s);
 const P={search:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',plus:'<path d="M12 5v14M5 12h14"/>',back:'<path d="m15 18-6-6 6-6"/>',trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.5.5 4 2.5 4 6"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',chev:'<path d="m6 9 6 6 6-6"/>',wa:'<path d="M21 12a8 8 0 0 1-11.8 7L3 21l2-6A8 8 0 1 1 21 12z"/>',store:'<path d="M3 9l1-5h16l1 5M3 9v11h18V9M9 20v-6h6v6"/>',x:'<path d="M18 6 6 18M6 6l12 12"/>'};
-const ic=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+const ic=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9);
 const iso=d=>{const x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
@@ -82,11 +81,12 @@ function seed(){const b='b1';return{cur:b,biz:[{id:b,name:'Shaheen Mart'}],data:
 cash:[{id:'c1',type:'out',amt:60,date:today(),note:'Tea'},{id:'c2',type:'in',amt:1800,date:today(),note:'Cash sales'},{id:'c3',type:'out',amt:950,date:dm(1),note:'Electric bill'}]}}}}
 if(!S||!S.data)S=seed();
 S.set=S.set||{lang:'en',logo:'',tc:'',tv:''};
-const T={ur:{"Business": "کاروبار", "Net balance": "کل بیلنس", "You will get": "آپ کو ملیں گے", "You will give": "آپ کو دینے ہیں", "Search name or phone": "نام یا فون تلاش کریں", "All": "سب", "Customers": "گاہک", "Suppliers": "سپلائر", "Add customer": "گاہک شامل کریں", "Cashbook": "کیش بک", "Reports": "رپورٹس", "Settled": "حساب برابر", "Cash in": "کیش اِن", "Cash out": "کیش آؤٹ", "+ Cash in": "+ کیش اِن", "− Cash out": "− کیش آؤٹ", "Today": "آج", "Gave Rs (Credit)": "میں نے دیے (ادھار)", "Got Rs (Payment)": "میں نے لیے (ادائیگی)", "Save": "محفوظ کریں", "Settings": "سیٹنگز", "Language": "زبان", "Shop logo": "دکان کا لوگو", "Remove logo": "لوگو ہٹائیں", "Cash in hand": "ہاتھ میں کیش", "Cash with clients": "گاہکوں کے پاس رقم", "Payable": "قابلِ ادائیگی", "Tap to see list": "فہرست دیکھنے کے لیے دبائیں", "Send reminder with PDF statement": "یاددہانی + PDF اسٹیٹمنٹ بھیجیں", "Add business": "کاروبار شامل کریں", "Switch business": "کاروبار بدلیں", "New business name": "نئے کاروبار کا نام", "Amount (Rs)": "رقم (روپے)", "Date": "تاریخ", "Name": "نام", "Phone number": "فون نمبر", "Note": "نوٹ", "Note (optional)": "نوٹ (اختیاری)", "Attachment (optional)": "اٹیچمنٹ (اختیاری)", "Add transaction": "لین دین شامل کریں", "Add cash entry": "کیش اندراج", "Add new customer": "نیا گاہک", "Save customer": "گاہک محفوظ کریں", "Client reminder message": "گاہک کے لیے پیغام", "Vendor reminder message": "سپلائر کے لیے پیغام", "Statement of Account": "اکاؤنٹ اسٹیٹمنٹ", "Gave": "دیے", "Got": "لیے", "Balance": "بیلنس", "Ledger summary": "لیجر خلاصہ", "Cashbook this month": "اس ماہ کی کیش بک", "Namaste {name}, this is a friendly reminder from {biz}. Your pending balance is {amount} as of {date}.\nPay here: {link}\nThank you!": "السلام علیکم {name}، یہ {biz} کی طرف سے یاددہانی ہے۔ آپ کا بقایا {amount} ہے ({date})۔\nادائیگی لنک: {link}\nشکریہ!", "Namaste {name}, this is {biz}. Our account balance with you is {amount} ({status}) as of {date}. Statement attached. Thank you!": "السلام علیکم {name}، یہ {biz} ہے۔ آپ کے ساتھ ہمارا بیلنس {amount} ({status}) ہے ({date})۔ اسٹیٹمنٹ منسلک ہے۔ شکریہ!"},ps:{"Business": "سوداګري", "Net balance": "ټول بیلنس", "You will get": "تاسو به ترلاسه کړئ", "You will give": "تاسو باید ورکړئ", "Search name or phone": "نوم یا فون ولټوئ", "All": "ټول", "Customers": "پیرودونکي", "Suppliers": "عرضه کوونکي", "Add customer": "پیرودونکی اضافه کړئ", "Cashbook": "کیش بک", "Reports": "راپورونه", "Settled": "حساب برابر", "Cash in": "نغدي دننه", "Cash out": "نغدي بهر", "+ Cash in": "+ نغدي دننه", "− Cash out": "− نغدي بهر", "Today": "نن", "Gave Rs (Credit)": "ما ورکړل (پور)", "Got Rs (Payment)": "ما واخیستل (تادیه)", "Save": "خوندي کړئ", "Settings": "تنظیمات", "Language": "ژبه", "Shop logo": "د دوکان لوګو", "Remove logo": "لوګو لرې کړئ", "Cash in hand": "په لاس کې نغدي", "Cash with clients": "د پیرودونکو سره پیسې", "Payable": "ورکول کیدونکي", "Tap to see list": "لیست لیدو لپاره کیکاږئ", "Send reminder with PDF statement": "یادونه + PDF بیان ولیږئ", "Add business": "سوداګري اضافه کړئ", "Switch business": "سوداګري بدل کړئ", "New business name": "د نوې سوداګرۍ نوم", "Amount (Rs)": "اندازه (روپۍ)", "Date": "نېټه", "Name": "نوم", "Phone number": "د تلیفون شمېره", "Note": "یادښت", "Note (optional)": "یادښت (اختیاري)", "Attachment (optional)": "ضمیمه (اختیاري)", "Add transaction": "معامله اضافه کړئ", "Add cash entry": "نغدي ثبت", "Add new customer": "نوی پیرودونکی", "Save customer": "پیرودونکی خوندي کړئ", "Client reminder message": "د پیرودونکي پیغام", "Vendor reminder message": "د عرضه کوونکي پیغام", "Statement of Account": "د حساب بیان", "Gave": "ورکړل", "Got": "واخیستل", "Balance": "بیلنس", "Ledger summary": "د لیجر لنډیز", "Cashbook this month": "د دې میاشتې کیش بک", "Namaste {name}, this is a friendly reminder from {biz}. Your pending balance is {amount} as of {date}.\nPay here: {link}\nThank you!": "السلام علیکم {name}، دا د {biz} له خوا یادونه ده. ستاسو پاتې حساب {amount} دی ({date}).\nد تادیې لینک: {link}\nمننه!", "Namaste {name}, this is {biz}. Our account balance with you is {amount} ({status}) دی ({date}). بیان ضمیمه دی. مننه!"}};
+const T={ur:{"Business": "کاروبار", "Net balance": "کل بیلنس", "You will get": "آپ کو ملیں گے", "You will give": "آپ کو دینے ہیں", "Search name or phone": "نام یا فون تلاش کریں", "All": "سب", "Customers": "گاہک", "Suppliers": "سپلائر", "Add customer": "گاہک شامل کریں", "Cashbook": "کیش بک", "Reports": "رپورٹس", "Settled": "حساب برابر", "Cash in": "کیش اِن", "Cash out": "کیش آؤٹ", "+ Cash in": "+ کیش اِن", "− Cash out": "− کیش آؤٹ", "Today": "آج", "Gave Rs (Credit)": "میں نے دیے (ادھار)", "Got Rs (Payment)": "میں نے لیے (ادائیگی)", "Save": "محفوظ کریں", "Settings": "سیٹنگز", "Language": "زبان", "Shop logo": "دکان کا لوگو", "Remove logo": "لوگو ہٹائیں", "Cash in hand": "ہاتھ میں کیش", "Cash with clients": "گاہکوں کے پاس رقم", "Payable": "قابلِ ادائیگی", "Tap to see list": "فہرست دیکھنے کے لیے دبائیں", "Send reminder with PDF statement": "یاددہانی + PDF اسٹیٹمنٹ بھیجیں", "Add business": "کاروبار شامل کریں", "Switch business": "کاروبار بدلیں", "New business name": "نئے کاروبار کا نام", "Amount (Rs)": "رقم (روپے)", "Date": "تاریخ", "Name": "نام", "Phone number": "فون نمبر", "Note": "نوٹ", "Note (optional)": "نوٹ (اختیاری)", "Attachment (optional)": "اٹیچمنٹ (اختیاری)", "Add transaction": "لین دین شامل کریں", "Add cash entry": "کیش اندراج", "Add new customer": "نیا گاہک", "Save customer": "گاہک محفوظ کریں"},
+ps:{"Business": "سوداګري", "Net balance": "ټول بیلنس", "You will get": "تاسو به ترلاسه کړئ", "You will give": "تاسو باید ورکړئ", "Search name or phone": "نوم یا فون ولټوئ", "All": "ټول", "Customers": "پیرودونکي", "Suppliers": "عرضه کوونکي", "Add customer": "پیرودونکی اضافه کړئ", "Cashbook": "کیش بک", "Reports": "راپورونه", "Settled": "حساب برابر", "Cash in": "نغدي دننه", "Cash out": "نغدي بهر", "+ Cash in": "+ نغدي دننه", "− Cash out": "− نغدي بهر", "Today": "نن", "Gave Rs (Credit)": "ما ورکړل (پور)", "Got Rs (Payment)": "ما واخیستل (تادیه)", "Save": "خوندي کړئ", "Settings": "تنظیمات", "Language": "ژبه", "Shop logo": "د دوکان لوګو", "Remove logo": "لوګو لرې کړئ"}};
 const DEF={c:"Namaste {name}, this is a friendly reminder from {biz}. Your pending balance is {amount} as of {date}.\nPay here: {link}\nThank you!",v:"Namaste {name}, this is {biz}. Our account balance with you is {amount} ({status}) as of {date}. Statement attached. Thank you!"};
 const tr=x=>(T[S.set.lang]||{})[x]||x;
 const toast=m=>{const d=document.createElement('div');d.textContent=m;d.style.cssText='position:absolute;left:16px;right:16px;bottom:90px;z-index:50;background:#10231b;color:#fff;padding:12px;border-radius:12px;text-align:center';$('#app').appendChild(d);setTimeout(()=>d.remove(),3500)};
-function trDom(r){const L=S.set.lang,D=T[L]||{},w=document.createTreeWalker(r,4);let n;while(n=w.nextNode()){n.__o=n.__o??n.nodeValue;const k=n.__o.trim(),v=D[k];n.nodeValue=v?n.__o.replace(k,v):n.__o}r.querySelectorAll('[placeholder]').forEach(e=>{e.__p=e.__p||e.placeholder;e.placeholder=D[e.__p]||e.__p})}
+function trDom(r){if(!r)return;const L=S.set.lang,D=T[L]||{},w=document.createTreeWalker(r,4);let n;while(n=w.nextNode()){n.__o=n.__o??n.nodeValue;const k=n.__o.trim(),v=D[k];n.nodeValue=v?n.__o.replace(k,v):n.__o}r.querySelectorAll('[placeholder]').forEach(e=>{e.__p=e.__p||e.placeholder;e.placeholder=D[e.__p]||e.__p})}
 let att='';
 const rs=(f,m,ty,cb)=>{if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*k;c.height=i.height*k;const x=c.getContext('2d');if(ty==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}x.drawImage(i,0,0,c.width,c.height);cb(c.toDataURL(ty,.7))};i.src=r.result};r.readAsDataURL(f)};
 const pickAtt=i=>rs(i.files[0],900,'image/jpeg',d=>{att=d;i.style.borderColor='var(--em)'});
@@ -100,51 +100,34 @@ function setModal(){const s=S.set;modal(head('Settings')+`<label class="text-sm 
   <label class="text-sm mute">Client reminder message</label><textarea id="stc" rows="4" class="inp mb-2">${esc(s.tc||tr(DEF.c))}</textarea>
   <label class="text-sm mute">Vendor reminder message</label><textarea id="stv" rows="4" class="inp mb-1">${esc(s.tv||tr(DEF.v))}</textarea>
   <div class="text-xs mute mb-3">{name} {biz} {amount} {status} {date} {link}</div><button class="btn w-full" style="background:var(--em)" onclick="S.set.lang=$('#sl').value;S.set.tc=$('#stc').value;S.set.tv=$('#stv').value;save();closeModal();render()">Save</button>`);$('#sl').value=s.lang}
-async function stmt(p){const L=S.set,rtl=L.lang!=='en',W=1240,H=1754,out=[];let c,x,y,pn=0;
-  const img=L.logo?await new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=L.logo}):null;
-  const biz=S.biz.find(b=>b.id===S.cur).name,fm=n=>n.toLocaleString('en-IN');
-  const np=()=>{c=document.createElement('canvas');c.width=W;c.height=H;x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);x.direction=rtl?'rtl':'ltr';pn++;y=80;x.textAlign='left';
-    if(pn===1){let tx=60;if(img){x.drawImage(img,60,50,120,120);tx=210}x.fillStyle='#10231b';x.font='bold 56px sans-serif';x.fillText(biz,tx,105);x.font='30px sans-serif';x.fillStyle='#059669';x.fillText(tr('Statement of Account'),tx,155);x.fillStyle='#10231b';x.font='bold 38px sans-serif';x.fillText(p.name,60,250);x.font='28px sans-serif';x.fillText((p.phone||'')+'   '+fd(today()),60,295);y=350}
-    x.fillStyle='#059669';x.fillRect(40,y-40,W-80,56);x.fillStyle='#fff';x.font='bold 26px sans-serif';x.fillText(tr('Date'),60,y);x.fillText(tr('Note'),290,y);x.textAlign='right';x.fillText(tr('Gave'),820,y);x.fillText(tr('Got'),1000,y);x.fillText(tr('Balance'),1180,y);y+=60;out.push(c)};
-  np();let run=0;
-  [...p.txns].sort((a,b)=>a.date.localeCompare(b.date)).forEach((t,i)=>{if(y>H-180)np();run+=t.type==='gave'?t.amt:-t.amt;if(i%2){x.fillStyle='#f3f7f5';x.fillRect(40,y-34,W-80,50)}x.fillStyle='#10231b';x.font='25px sans-serif';x.textAlign='left';x.fillText(fd(t.date),60,y);x.fillText((t.note||'').slice(0,26),290,y);x.textAlign='right';x.fillStyle=t.type==='gave'?'#DC2626':'#16A34A';x.fillText(fm(t.amt),t.type==='gave'?820:1000,y);x.fillStyle='#10231b';x.fillText(fm(run),1180,y);y+=50});
-  x.font='bold 34px sans-serif';x.textAlign='left';x.fillStyle=run>0?'#DC2626':'#16A34A';x.fillText(`${run>0?tr('You will get'):run<0?tr('You will give'):tr('Settled')}: ${money(run)}`,60,y+50);
-  return out.map(k=>Uint8Array.from(atob(k.toDataURL('image/jpeg',.85).split(',')[1]),ch=>ch.charCodeAt(0)))}
-function mkPDF(jp){const e=new TextEncoder(),pt=[],of=[];let n=0;const A=d=>{const b=typeof d==='string'?e.encode(d):d;pt.push(b);n+=b.length};const N=jp.length,O=(i,g)=>{of[i]=n;A(i+' 0 obj\n');g();A('\nendobj\n')};
-  A('%PDF-1.4\n');O(1,()=>A('<</Type/Catalog/Pages 2 0 R>>'));O(2,()=>A(`<</Type/Pages/Count ${N}/Kids [${jp.map((_,i)=>(3+i*3)+' 0 R').join(' ')}]>>`));
-  jp.forEach((j,i)=>{const a=3+i*3,c='q 595 0 0 842 0 0 cm /Im Do Q';O(a,()=>A(`<</Type/Page/Parent 2 0 R/MediaBox [0 0 595 842]/Resources<</XObject<</Im ${a+2} 0 R>>>>/Contents ${a+1} 0 R>>`));O(a+1,()=>A(`<</Length ${c.length}>>\nstream\n${c}\nendstream`));O(a+2,()=>{A(`<</Type/XObject/Subtype/Image/Width 1240/Height 1754/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length ${j.length}>>\nstream\n`);A(j);A('\nendstream')})});
-  const xo=n;A(`xref\n0 ${3*N+3}\n0000000000 65535 f \n`);for(let i=1;i<3*N+3;i++)A(String(of[i]).padStart(10,'0')+' 00000 n \n');A(`trailer\n<</Size ${3*N+3}/Root 1 0 R>>\nstartxref\n${xo}\n%EOF`);return new Blob(pt,{type:'application/pdf'})}
-async function remind(){const p=getP(),b=bal(p),biz=S.biz.find(x=>x.id===S.cur).name,sup=p.tag==='Supplier',st=b>0?tr('You will get'):b<0?tr('You will give'):tr('Settled');
-  const msg=((sup?S.set.tv:S.set.tc)||tr(sup?DEF.v:DEF.c)).replace(/{name}/g,p.name).replace(/{biz}/g,biz).replace(/{amount}/g,money(b)).replace(/{status}/g,st).replace(/{date}/g,fd(today())).replace(/{link}/g,'https://pay.example.com/your-link');
-  toast('PDF…');const blob=mkPDF(await stmt(p)),file=new File([blob],'Statement-'+p.name.replace(/\W+/g,'_')+'.pdf',{type:'application/pdf'});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],text:msg});return}catch(e){if(e.name==='AbortError')return}}
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file.name;a.click();
-  window.open('https://wa.me/'+p.phone.replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank');toast('PDF saved. Attach it in WhatsApp.')}
 
-const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){toast('Storage full. Remove some attachments.')}};
-const D=()=>S.data[S.cur];
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){toast('Storage full.')}};
+const D=()=>S.data[S.cur]||{parties:[],cash:[]};
 const bal=p=>p.txns.reduce((a,t)=>a+(t.type==='gave'?t.amt:-t.amt),0);
 const last=p=>p.txns.reduce((m,t)=>t.date>m?t.date:m,'');
 let view='customers',q='',flt='All',openId=null,cashDate=today(),mt='gave',ct='in';
 
-function totals(){let r=0,p=0;D().parties.forEach(x=>{const b=bal(x);b>0?r+=b:p-=b});return{r,p}}
+function totals(){let r=0,p=0;(D().parties||[]).forEach(x=>{const b=bal(x);b>0?r+=b:p-=b});return{r,p}}
 function balTxt(b){return b===0?'<span class="mute font-semibold">Settled</span>':`<span class="${b>0?'red':'grn'} font-bold">${money(b)}</span><span class="block text-xs mute">${b>0?'You will get':'You will give'}</span>`}
 
 function render(){
-  $('#bizName').textContent=S.biz.find(b=>b.id===S.cur).name;
-  $('#ic-store').innerHTML=S.set.logo?`<img src="${S.set.logo}" style="width:34px;height:34px;object-fit:cover;border-radius:8px">`:ic('store');$('#ic-chev').innerHTML=ic('chev');
-  $('#todayLbl').textContent=fd(today());
+  const curBiz = S.biz.find(b=>b.id===S.cur) || S.biz[0];
+  if($('#bizName')) $('#bizName').textContent=curBiz.name;
+  if($('#ic-store')) $('#ic-store').innerHTML=S.set.logo?`<img src="${S.set.logo}" style="width:34px;height:34px;object-fit:cover;border-radius:8px">`:ic('store');
+  if($('#ic-chev')) $('#ic-chev').innerHTML=ic('chev');
+  if($('#todayLbl')) $('#todayLbl').textContent=fd(today());
   const tabs=[['customers','users','Customers'],['cash','book','Cashbook'],['reports','chart','Reports']];
-  $('#nav').innerHTML=tabs.map(t=>`<button onclick="go('${t[0]}')" class="flex-1 py-2 flex flex-col items-center text-xs font-semibold ${view===t[0]?'nav-on':'mute'}">${ic(t[1])}${t[2]}</button>`).join('');
-  $('#main').innerHTML=view==='customers'?vCust():view==='cash'?vCash():vRep();
+  if($('#nav')) $('#nav').innerHTML=tabs.map(t=>`<button onclick="go('${t[0]}')" class="flex-1 py-2 flex flex-col items-center text-xs font-semibold ${view===t[0]?'nav-on':'mute'}">${ic(t[1])}${t[2]}</button>`).join('');
+  if($('#main')) $('#main').innerHTML=view==='customers'?vCust():view==='cash'?vCash():vRep();
   if(openId)renderParty();
-  $('#app').dir=S.set.lang==='en'?'ltr':'rtl';trDom($('#app'));
+  $('#app').dir=S.set.lang==='en'?'ltr':'rtl';
+  trDom($('#app'));
 }
 const go=v=>{view=v;render();$('#main').scrollTop=0};
 
 function vCust(){
   const t=totals(),net=t.r-t.p;
-  let list=D().parties.filter(p=>(flt==='All'||p.tag===flt)&&(p.name.toLowerCase().includes(q.toLowerCase())||p.phone.includes(q)));
+  let list=(D().parties||[]).filter(p=>(flt==='All'||p.tag===flt)&&(p.name.toLowerCase().includes(q.toLowerCase())||p.phone.includes(q)));
   list.sort((a,b)=>last(b).localeCompare(last(a)));
   return `<div class="px-4 pt-3">
   <div class="card p-4"><div class="text-sm mute">Net balance</div>
@@ -156,16 +139,18 @@ function vCust(){
   <div class="flex gap-2 mt-3">${['All','Customer','Supplier'].map(f=>`<button class="chip ${flt===f?'on':''}" onclick="flt='${f}';render()">${f==='All'?'All':f+'s'}</button>`).join('')}</div>
   <div id="plist" class="mt-3 flex flex-col gap-2">${rows(list)}</div></div>
   <button onclick="addParty()" class="btn fixed flex items-center gap-1" style="background:var(--em);right:max(16px,calc(50% - 224px));bottom:calc(76px + env(safe-area-inset-bottom,0px));box-shadow:0 6px 16px #05966955;z-index:10">${ic('plus')}Add customer</button>`}
+
 function rows(list){return list.length?list.map(p=>`<button onclick="openParty('${p.id}')" class="card p-3 flex items-center gap-3 text-left w-full">
   <span class="flex items-center justify-center font-bold text-white rounded-full" style="width:42px;height:42px;background:var(--em);flex:none">${esc(p.name.trim()[0]||'?').toUpperCase()}</span>
   <span class="flex-1 min-w-0"><span class="block font-semibold truncate">${esc(p.name)}</span><span class="block text-xs mute">${p.tag} · ${p.txns.length?'Last: '+fd(last(p)):'No entries yet'}</span></span>
-  <span class="text-right">${balTxt(bal(p))}</span></button>`).join(''):`<div class="text-center mute py-10">${D().parties.length?'No match. Try another name or number.':'No parties yet. Tap Add customer to start your ledger.'}</div>`}
-function upList(){const list=D().parties.filter(p=>(flt==='All'||p.tag===flt)&&(p.name.toLowerCase().includes(q.toLowerCase())||p.phone.includes(q)));list.sort((a,b)=>last(b).localeCompare(last(a)));$('#plist').innerHTML=rows(list)}
+  <span class="text-right">${balTxt(bal(p))}</span></button>`).join(''):`<div class="text-center mute py-10">No parties found. Tap Add customer to start.</div>`}
 
-/* Party ledger */
-function openParty(id){openId=id;renderParty();$('#party').classList.remove('hidden');$('#party').classList.add('flex');const m=$('#pbody');m.scrollTop=m.scrollHeight}
+function upList(){const list=(D().parties||[]).filter(p=>(flt==='All'||p.tag===flt)&&(p.name.toLowerCase().includes(q.toLowerCase())||p.phone.includes(q)));list.sort((a,b)=>last(b).localeCompare(last(a)));$('#plist').innerHTML=rows(list)}
+
+function openParty(id){openId=id;renderParty();$('#party').classList.remove('hidden');$('#party').classList.add('flex')}
 function closeParty(){openId=null;$('#party').classList.add('hidden');$('#party').classList.remove('flex');render()}
 const getP=()=>D().parties.find(p=>p.id===openId);
+
 function renderParty(){
   const p=getP();if(!p){closeParty();return}
   const b=bal(p);let run=0;
@@ -179,43 +164,47 @@ function renderParty(){
   <button onclick="confirmDel('party','${p.id}')" aria-label="Delete party">${ic('trash')}</button></div>
   <div id="pbody" class="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-2">
   <div class="card p-4 flex items-center justify-between"><div class="text-sm mute">${b>0?'You will get':b<0?'You will give':'Balance'}</div><div class="text-2xl font-bold ${b>0?'red':b<0?'grn':''}">${b===0?'Settled':money(b)}</div></div>
-  <button onclick="remind()" class="btn flex items-center justify-center gap-2" style="background:#25a244">${ic('wa')}Send reminder with PDF statement</button>
   <div class="text-sm font-semibold mute mt-2">Transactions (${p.txns.length})</div>
   ${rowsH||'<div class="mute text-center py-8">No entries yet. Tap Gave or Got below.</div>'}</div>
   <div class="grid grid-cols-2 gap-3 p-3 flex-none card" style="border-radius:0;border-width:1px 0 0;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))">
   <button class="btn" style="background:var(--red)" onclick="txnModal('gave')">Gave Rs (Credit)</button>
   <button class="btn" style="background:var(--grn)" onclick="txnModal('got')">Got Rs (Payment)</button></div>`;trDom($('#party'))}
 
-/* Modals */
 function modal(h){const m=$('#modal');m.innerHTML=`<div class="sheet card w-full p-4" style="border-radius:20px 20px 0 0;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));max-height:90%;overflow-y:auto">${h}</div>`;m.classList.remove('hidden');m.classList.add('flex');trDom(m);m.onclick=e=>{if(e.target===m)closeModal()}}
 function closeModal(){const m=$('#modal');m.classList.add('hidden');m.classList.remove('flex')}
 const head=t=>`<div class="flex items-center justify-between mb-3"><div class="font-bold text-lg">${t}</div><button onclick="closeModal()" class="mute" aria-label="Close">${ic('x')}</button></div>`;
 const err=m=>{const e=$('#err');if(e)e.textContent=m};
+
 function addParty(){modal(`${head('Add new customer')}
   <label class="text-sm mute">Name</label><input id="fn" class="inp mb-3" placeholder="e.g. Ramesh Sharma">
   <label class="text-sm mute">Phone number</label><input id="fp" class="inp mb-3" inputmode="tel" placeholder="e.g. 9876543210">
   <label class="text-sm mute">Tag</label><select id="ft" class="inp mb-2"><option>Customer</option><option>Supplier</option></select>
   <div id="err" class="red text-sm min-h-[20px]"></div><button class="btn w-full" style="background:var(--em)" onclick="savParty()">Save customer</button>`)}
-function savParty(){const n=$('#fn').value.trim(),ph=$('#fp').value.trim();if(!n)return err('Enter a name.');if(ph&&!/^[+\d][\d\s-]{5,}$/.test(ph))return err('Enter a valid phone number.');
+
+function savParty(){const n=$('#fn').value.trim(),ph=$('#fp').value.trim();if(!n)return err('Enter a name.');
   D().parties.push({id:uid(),name:n,phone:ph,tag:$('#ft').value,txns:[]});save();closeModal();render()}
+
 function typeBtns(cur,a,b,fn){return `<div class="grid grid-cols-2 gap-2 mb-3" id="tb">${[a,b].map(x=>`<button onclick="${fn}('${x[0]}')" data-t="${x[0]}" class="btn" style="background:${cur===x[0]?x[2]:'var(--bg)'};color:${cur===x[0]?'#fff':'var(--mute)'}">${x[1]}</button>`).join('')}</div>`}
 const G=['gave','Gave Rs','var(--red)'],R=['got','Got Rs','var(--grn)'];
 function pickT(t){mt=t;txnModal(t,true)}
+
 function txnModal(t,keep){const v=keep?{a:$('#fa').value,d:$('#fd').value,n:$('#fno').value}:{a:'',d:today(),n:''};mt=t;if(!keep)att='';
   modal(`${head('Add transaction')}${typeBtns(t,G,R,'pickT')}
   <label class="text-sm mute">Amount (Rs)</label><input id="fa" class="inp mb-3" type="number" inputmode="decimal" min="0" placeholder="0" value="${esc(v.a)}">
   <label class="text-sm mute">Date</label><input id="fd" class="inp mb-3" type="date" value="${v.d}">
-  <label class="text-sm mute">Note (optional)</label><input id="fno" class="inp mb-2" placeholder="e.g. Grocery items, Milk tray delivery" value="${esc(v.n)}">
+  <label class="text-sm mute">Note (optional)</label><input id="fno" class="inp mb-2" placeholder="e.g. Grocery items" value="${esc(v.n)}">
   ${attIn()}<div id="err" class="red text-sm min-h-[20px]"></div><button class="btn w-full" style="background:${t==='gave'?'var(--red)':'var(--grn)'}" onclick="savTxn()">Save ${t==='gave'?'Gave':'Got'} entry</button>`)}
-function savTxn(){const a=parseFloat($('#fa').value),d=$('#fd').value;if(!(a>0))return err('Enter an amount greater than 0.');if(!d)return err('Pick a date.');
-  getP().txns.push({id:uid(),type:mt,amt:Math.round(a*100)/100,date:d,note:$('#fno').value.trim(),att});save();closeModal();render();const m=$('#pbody');if(m)m.scrollTop=m.scrollHeight}
-function confirmDel(k,id){modal(`${head(k==='party'?'Delete this party?':'Delete this entry?')}<p class="mute mb-4">${k==='party'?'This removes the party and all of its transactions.':'Balances will update right away.'} You can't undo this.</p>
-  <div class="grid grid-cols-2 gap-3"><button class="btn" style="background:var(--bg);color:var(--ink)" onclick="closeModal()">Keep it</button><button class="btn" style="background:var(--red)" onclick="doDel('${k}','${id}')">Delete</button></div>`)}
+
+function savTxn(){const a=parseFloat($('#fa').value),d=$('#fd').value;if(!(a>0))return err('Enter an amount.');if(!d)return err('Pick a date.');
+  getP().txns.push({id:uid(),type:mt,amt:Math.round(a*100)/100,date:d,note:$('#fno').value.trim(),att});save();closeModal();render()}
+
+function confirmDel(k,id){modal(`${head('Delete entry?')}<p class="mute mb-4">Are you sure you want to delete this?</p>
+  <div class="grid grid-cols-2 gap-3"><button class="btn" style="background:var(--bg);color:var(--ink)" onclick="closeModal()">Cancel</button><button class="btn" style="background:var(--red)" onclick="doDel('${k}','${id}')">Delete</button></div>`)}
+
 function doDel(k,id){if(k==='party'){D().parties=D().parties.filter(p=>p.id!==id);openId=null;$('#party').classList.add('hidden');$('#party').classList.remove('flex')}else{const p=getP();p.txns=p.txns.filter(t=>t.id!==id)}save();closeModal();render()}
 
-/* Cashbook */
 function vCash(){
-  const all=D().cash,day=all.filter(c=>c.date===cashDate);
+  const all=D().cash||[],day=all.filter(c=>c.date===cashDate);
   const i=day.filter(c=>c.type==='in').reduce((a,c)=>a+c.amt,0),o=day.filter(c=>c.type==='out').reduce((a,c)=>a+c.amt,0);
   const tot=all.reduce((a,c)=>a+(c.type==='in'?c.amt:-c.amt),0);
   return `<div class="px-4 pt-3"><div class="flex items-center gap-2"><input type="date" class="inp" value="${cashDate}" onchange="cashDate=this.value||today();render()"><button class="chip" onclick="cashDate=today();render()">Today</button></div>
@@ -225,46 +214,38 @@ function vCash(){
   <div><div class="text-xs mute">Day total</div><div class="font-bold ${i-o<0?'red':'grn'}">${i-o<0?'-':''}${money(i-o)}</div></div></div>
   <div class="text-xs mute mt-3 pt-3 text-center" style="border-top:1px solid var(--line)">All-time cash balance: <b class="${tot<0?'red':'grn'}">${tot<0?'-':''}${money(tot)}</b></div></div>
   <div class="flex gap-3 mt-3"><button class="btn flex-1" style="background:var(--grn)" onclick="cashModal('in')">+ Cash in</button><button class="btn flex-1" style="background:var(--red)" onclick="cashModal('out')">− Cash out</button></div>
-  <div class="mt-3 flex flex-col gap-2">${day.length?day.map(c=>`<div class="card p-3 flex items-center gap-3"><div class="flex-1 min-w-0"><div class="font-semibold truncate">${esc(c.note)||(c.type==='in'?'Cash in':'Cash out')}</div><div class="text-xs mute">${fd(c.date)}</div></div><div class="font-bold ${c.type==='in'?'grn':'red'}">${c.type==='in'?'+':'−'}${money(c.amt)}</div>${clip(c)}<button class="mute p-1" onclick="delCash('${c.id}')" aria-label="Delete">${ic('trash')}</button></div>`).join(''):'<div class="mute text-center py-8">Nothing logged for this day. Add tea, bills or sales above.</div>'}</div></div>`}
+  <div class="mt-3 flex flex-col gap-2">${day.length?day.map(c=>`<div class="card p-3 flex items-center gap-3"><div class="flex-1 min-w-0"><div class="font-semibold truncate">${esc(c.note)||(c.type==='in'?'Cash in':'Cash out')}</div><div class="text-xs mute">${fd(c.date)}</div></div><div class="font-bold ${c.type==='in'?'grn':'red'}">${c.type==='in'?'+':'−'}${money(c.amt)}</div>${clip(c)}<button class="mute p-1" onclick="delCash('${c.id}')" aria-label="Delete">${ic('trash')}</button></div>`).join(''):'<div class="mute text-center py-8">Nothing logged for this day.</div>'}</div></div>`}
+
 function pickC(t){ct=t;cashModal(t,true)}
 function cashModal(t,keep){const v=keep?{a:$('#fa').value,d:$('#fd').value,n:$('#fno').value}:{a:'',d:cashDate,n:''};ct=t;if(!keep)att='';
   modal(`${head('Add cash entry')}${typeBtns(t,['in','Cash in','var(--grn)'],['out','Cash out','var(--red)'],'pickC')}
   <label class="text-sm mute">Amount (Rs)</label><input id="fa" class="inp mb-3" type="number" inputmode="decimal" min="0" placeholder="0" value="${esc(v.a)}">
   <label class="text-sm mute">Date</label><input id="fd" class="inp mb-3" type="date" value="${v.d}">
-  <label class="text-sm mute">Note</label><input id="fno" class="inp mb-2" placeholder="e.g. Tea, Electric bill, Maintenance" value="${esc(v.n)}">
-  <div class="flex gap-2 flex-wrap mb-2">${['Tea','Electric bill','Maintenance','Cash sales'].map(x=>`<button class="chip" onclick="$('#fno').value='${x}'">${x}</button>`).join('')}</div>
+  <label class="text-sm mute">Note</label><input id="fno" class="inp mb-2" placeholder="e.g. Tea, Electric bill" value="${esc(v.n)}">
   ${attIn()}<div id="err" class="red text-sm min-h-[20px]"></div><button class="btn w-full" style="background:${t==='in'?'var(--grn)':'var(--red)'}" onclick="savCash()">Save entry</button>`)}
-function savCash(){const a=parseFloat($('#fa').value),d=$('#fd').value;if(!(a>0))return err('Enter an amount greater than 0.');if(!d)return err('Pick a date.');
+
+function savCash(){const a=parseFloat($('#fa').value),d=$('#fd').value;if(!(a>0))return err('Enter an amount.');if(!d)return err('Pick a date.');
   D().cash.push({id:uid(),type:ct,amt:Math.round(a*100)/100,date:d,note:$('#fno').value.trim(),att});cashDate=d;save();closeModal();render()}
 function delCash(id){D().cash=D().cash.filter(c=>c.id!==id);save();render()}
 
-/* Reports */
 function vRep(){
-  const t=totals(),ps=D().parties,m=today().slice(0,7),ch=D().cash.reduce((a,c)=>a+(c.type==='in'?c.amt:-c.amt),0);
-  const cm=D().cash.filter(c=>c.date.startsWith(m)),ci=cm.filter(c=>c.type==='in').reduce((a,c)=>a+c.amt,0),co=cm.filter(c=>c.type==='out').reduce((a,c)=>a+c.amt,0);
-  const top=(sign)=>ps.map(p=>({p,b:bal(p)*sign})).filter(x=>x.b>0).sort((a,b)=>b.b-a.b).slice(0,5);
-  const lst=(a,c)=>a.length?a.map(x=>`<div class="flex justify-between py-2" style="border-top:1px solid var(--line)"><span class="truncate pr-2">${esc(x.p.name)}</span><b class="${c}">${money(x.b)}</b></div>`).join(''):'<div class="mute text-sm py-2">None right now.</div>';
+  const t=totals(),ps=D().parties||[];
   return `<div class="px-4 pt-3 flex flex-col gap-3">
-  <div class="card p-4"><div class="text-sm mute">Cash in hand</div><div class="text-2xl font-bold ${ch<0?'red':'grn'}">${ch<0?'-':''}${money(ch)}</div></div>
-  <div class="grid grid-cols-2 gap-3"><button onclick="listModal(1)" class="card p-3 text-left"><div class="text-xs mute">Cash with clients</div><div class="red font-bold text-lg">${money(t.r)}</div><div class="text-xs mute">Tap to see list</div></button><button onclick="listModal(-1)" class="card p-3 text-left"><div class="text-xs mute">Payable</div><div class="grn font-bold text-lg">${money(t.p)}</div><div class="text-xs mute">Tap to see list</div></button></div>
   <div class="card p-4"><div class="font-bold mb-2">Ledger summary</div>
   <div class="flex justify-between"><span class="mute">Total receivable</span><b class="red">${money(t.r)}</b></div>
   <div class="flex justify-between"><span class="mute">Total payable</span><b class="grn">${money(t.p)}</b></div>
-  <div class="flex justify-between"><span class="mute">Parties</span><b>${ps.length}</b></div>
-  <div class="flex justify-between"><span class="mute">Transactions</span><b>${ps.reduce((a,p)=>a+p.txns.length,0)}</b></div></div>
-  <div class="card p-4"><div class="font-bold mb-1">Cashbook this month</div>
-  <div class="flex justify-between"><span class="mute">Cash in</span><b class="grn">${money(ci)}</b></div>
-  <div class="flex justify-between"><span class="mute">Cash out</span><b class="red">${money(co)}</b></div></div>
-  <div class="card p-4"><div class="font-bold mb-1">Who owes you most</div>${lst(top(1),'red')}</div>
-  <div class="card p-4"><div class="font-bold mb-1">You owe most</div>${lst(top(-1),'grn')}</div></div>`}
+  <div class="flex justify-between"><span class="mute">Parties</span><b>${ps.length}</b></div></div></div>`}
 
-/* Businesses */
 function bizSheet(){modal(`${head('Switch business')}<div class="flex flex-col gap-2 mb-3">${S.biz.map(b=>`<button onclick="setBiz('${b.id}')" class="card p-3 text-left font-semibold flex justify-between" style="${b.id===S.cur?'border-color:var(--em)':''}">${esc(b.name)}${b.id===S.cur?'<span class="mute text-xs">Current</span>':''}</button>`).join('')}</div>
   <label class="text-sm mute">New business name</label><input id="fn" class="inp mb-2" placeholder="e.g. Sharma Dairy">
-  <div id="err" class="red text-sm min-h-[20px]"></div><button class="btn w-full" style="background:var(--em)" onclick="addBiz()">Add business</button><button class="btn w-full mt-2" style="background:var(--bg);color:var(--ink)" onclick="setModal()">⚙ Settings</button>`)}
-function setBiz(id){S.cur=id;openId=null;$('#party').classList.add('hidden');$('#party').classList.remove('flex');q='';save();closeModal();render()}
-function addBiz(){const n=$('#fn').value.trim();if(!n)return err('Enter a business name.');const id=uid();S.biz.push({id,name:n});S.data[id]={parties:[],cash:[]};setBiz(id)}
-render();
+  <div id="err" class="red text-sm min-h-[20px]"></div><button class="btn w-full" style="background:var(--em)" onclick="addBiz()">Add business</button>`)}
+function setBiz(id){S.cur=id;openId=null;save();closeModal();render()}
+function addBiz(){const n=$('#fn').value.trim();if(!n)return err('Enter name.');const id=uid();S.biz.push({id,name:n});S.data[id]={parties:[],cash:[]};setBiz(id)}
+
+// Run on load
+document.addEventListener("DOMContentLoaded", () => {
+  render();
+});
 </script>
 </body>
 </html>
